@@ -1,6 +1,14 @@
 import React from 'react';
 import Head from 'next/head';
-import { AppBar, Toolbar, Typography, Container, Box } from '@mui/material';
+import NextLink from 'next/link';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Box,
+  Link,
+} from '@mui/material';
 import useStyles from '../utils/styles';
 
 const Layout = ({ children }) => {
@@ -16,7 +24,20 @@ const Layout = ({ children }) => {
         className={classes.navbar}
       >
         <Toolbar>
-          <Typography>Amazona</Typography>
+          <NextLink href="/" passHref>
+            <Link>
+              <Typography className={classes.brand}>Amazona</Typography>
+            </Link>
+          </NextLink>
+          <div className={classes.grow}></div>
+          <div>
+            <NextLink href="/cart" passHref>
+              <Link>cart</Link>
+            </NextLink>
+            <NextLink href="/login" passHref>
+              <Link>login</Link>
+            </NextLink>
+          </div>
         </Toolbar>
       </AppBar>
       <Container className={classes.main}>{children}</Container>
