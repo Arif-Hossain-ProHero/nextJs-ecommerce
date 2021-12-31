@@ -10,7 +10,11 @@ const Layout = ({ children }) => {
       <Head>
         <title>Next-Amazona</title>
       </Head>
-      <AppBar className={classes.navbar}>
+      <AppBar
+        style={{ margin: 0 }}
+        position="static"
+        className={classes.navbar}
+      >
         <Toolbar>
           <Typography>Amazona</Typography>
         </Toolbar>
