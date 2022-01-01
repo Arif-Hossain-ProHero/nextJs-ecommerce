@@ -2,6 +2,7 @@ const data = {
   products: [
     {
       name: 'Boys Shirt',
+      slug: 'boys-shirt-1',
       category: 'Shirts',
       image: '/images/shirt-1.png',
       price: 60,
@@ -13,6 +14,7 @@ const data = {
     },
     {
       name: 'Boys Shirt 2',
+      slug: 'boys-shirt-2',
       category: 'Shirts',
       image: '/images/shirt-2.png',
       price: 70,
@@ -24,6 +26,7 @@ const data = {
     },
     {
       name: 'Boys Shirt 3',
+      slug: 'boys-shirt-3',
       category: 'Shirts',
       image: '/images/shirt-1.png',
       price: 60,
@@ -35,6 +38,7 @@ const data = {
     },
     {
       name: 'Boys Pant 1',
+      slug: 'boys-pant-1',
       category: 'Pants',
       image: '/images/pant-1.png',
       price: 90,
@@ -46,6 +50,7 @@ const data = {
     },
     {
       name: 'Boys Pant 2',
+      slug: 'boys-pant-2',
       category: 'Pants',
       image: '/images/pant-2.png',
       price: 90,
@@ -57,6 +62,7 @@ const data = {
     },
     {
       name: 'Boys Pant 3',
+      slug: 'boys-pant-3',
       category: 'Pants',
       image: '/images/pant-1.png',
       price: 90,

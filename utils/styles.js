@@ -19,6 +19,10 @@ const useStyles = makeStyles({
   main: {
     minHeight: '80vh',
   },
+  section: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
   footer: {
     textAlign: 'center',
   },
