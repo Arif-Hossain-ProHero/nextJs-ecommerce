@@ -11,7 +11,6 @@ import {
 import Head from 'next/head';
 import NextLink from 'next/link';
 import Layout from '../components/layout';
-import styles from '../styles/Home.module.css';
 import data from '../utils/data';
 
 export default function Home() {

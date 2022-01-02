@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import {
@@ -6,17 +6,21 @@ import {
   Toolbar,
   Typography,
   Container,
-  Box,
   Link,
   CssBaseline,
+  Switch,
 } from '@mui/material';
 import useStyles from '../utils/styles';
+import { Store } from '../utils/store';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Cookies from 'js-cookie';
 
 const Layout = ({ children, title, description }) => {
+  const { state, dispatch } = useContext(Store);
+  const { darkMode } = state;
   //initialize styles
   const classes = useStyles();
-  //mui theme
+  //-------------mui theme
   const theme = createTheme({
     typography: {
       fontFamily: "'Poppins', sans-serif",
@@ -32,12 +36,19 @@ const Layout = ({ children, title, description }) => {
       },
     },
     palette: {
-      type: 'light',
+      mode: darkMode ? 'dark' : 'light',
       primary: {
         main: '#f0c000',
       },
     },
   });
+  //-------dark mode change handler
+  const darkModeHandleChange = () => {
+    dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
+    const newDarkMode = !darkMode;
+    console.log(newDarkMode);
+    Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF');
+  };
   return (
     <div>
       <Head>
@@ -63,6 +74,11 @@ const Layout = ({ children, title, description }) => {
             </NextLink>
             <div className={classes.grow}></div>
             <div>
+              <Switch
+                checked={darkMode}
+                onClick={darkModeHandleChange}
+                inputProps={{ 'aria-label': 'controlled' }}
+              ></Switch>
               <NextLink href="/cart" passHref>
                 <Link>cart</Link>
               </NextLink>
