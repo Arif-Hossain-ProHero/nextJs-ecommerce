@@ -46,7 +46,7 @@ const Layout = ({ children, title, description }) => {
   const darkModeHandleChange = () => {
     dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
     const newDarkMode = !darkMode;
-    console.log(newDarkMode);
+    // console.log(newDarkMode);
     Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF');
   };
   return (
@@ -75,9 +75,8 @@ const Layout = ({ children, title, description }) => {
             <div className={classes.grow}></div>
             <div>
               <Switch
-                checked={darkMode}
-                onClick={darkModeHandleChange}
-                inputProps={{ 'aria-label': 'controlled' }}
+                checked={Cookies.get('darkMode') === 'ON' ? true : false}
+                onChange={darkModeHandleChange}
               ></Switch>
               <NextLink href="/cart" passHref>
                 <Link>cart</Link>

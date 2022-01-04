@@ -15,7 +15,9 @@
     "@mui/styles": "^5.2.3",
     "create-emotion-server": "^11.0.0",
     "js-cookie": "^3.0.1",
+    "mongoose": "^6.1.4",
     "next": "12.0.7",
+    "next-connect": "^0.11.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },

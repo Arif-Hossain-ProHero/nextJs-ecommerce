@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 export const Store = createContext();
 const initialState = {
-  darkMode: Cookies.get('darkMode') == 'ON' ? true : false,
+  darkMode: Cookies.get('darkMode') === 'ON' ? true : false,
 };
 
 const reducer = (state, action) => {
