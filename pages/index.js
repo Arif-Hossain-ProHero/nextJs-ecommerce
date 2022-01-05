@@ -11,9 +11,13 @@ import {
 import Head from 'next/head';
 import NextLink from 'next/link';
 import Layout from '../components/layout';
-import data from '../utils/data';
+// import data from '../utils/data';
+import Product from '../models/Product';
+import db from '../utils/db';
 
-export default function Home() {
+export default function Home(props) {
+  const { products } = props;
+  console.log(products);
   return (
     <div>
       <Head>
@@ -25,7 +29,7 @@ export default function Home() {
         <div>
           <h1>Products</h1>
           <Grid container spacing={3}>
-            {data.products.map((product) => (
+            {products.map((product) => (
               <Grid item md={4} key={product.name}>
                 <Card>
                   <NextLink href={`/products/${product.slug}`}>
@@ -54,4 +58,16 @@ export default function Home() {
       </Layout>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  await db.connect();
+  const products = await Product.find({}).lean();
+  console.log(products);
+  await db.disconnect();
+  return {
+    props: {
+      products: products.map(db.covertDocToObj),
+    },
+  };
 }

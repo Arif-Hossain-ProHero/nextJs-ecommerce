@@ -14,19 +14,14 @@ import Layout from '../../components/layout';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import useStyles from '../../utils/styles';
+import db from '../../utils/db';
+import Product from '../../models/Product';
 
-const Products = () => {
-  const router = useRouter();
-  const { slug } = router.query;
+const Products = ({ product }) => {
+  // const router = useRouter();
+  // const { slug } = router.query;
   const classes = useStyles();
-  const product = data.products.find((a) => a.slug === slug);
-  if (!product) {
-    return (
-      <div>
-        <h2>Product Not Found</h2>
-      </div>
-    );
-  }
+
   return (
     <Layout title={product.name} description={product.description}>
       <div className={classes.section}>
@@ -106,5 +101,19 @@ const Products = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+  await db.connect();
+  const product = await Product.findOne({ slug }).lean();
+  console.log(product);
+  await db.disconnect();
+  return {
+    props: {
+      product: db.covertDocToObj(product),
+    },
+  };
+}
 
 export default Products;
