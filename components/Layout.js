@@ -9,6 +9,7 @@ import {
   Link,
   CssBaseline,
   Switch,
+  Badge,
 } from '@mui/material';
 import useStyles from '../utils/styles';
 import { Store } from '../utils/store';
@@ -17,7 +18,7 @@ import Cookies from 'js-cookie';
 
 const Layout = ({ children, title, description }) => {
   const { state, dispatch } = useContext(Store);
-  const { darkMode } = state;
+  const { darkMode, cart } = state;
   //initialize styles
   const classes = useStyles();
   //-------------mui theme
@@ -79,7 +80,18 @@ const Layout = ({ children, title, description }) => {
                 onChange={darkModeHandleChange}
               ></Switch>
               <NextLink href="/cart" passHref>
-                <Link>cart</Link>
+                <Link>
+                  {cart.cartItems.length > 0 ? (
+                    <Badge
+                      badgeContent={cart.cartItems.length}
+                      color="secondary"
+                    >
+                      Cart
+                    </Badge>
+                  ) : (
+                    'Cart'
+                  )}
+                </Link>
               </NextLink>
               <NextLink href="/login" passHref>
                 <Link>login</Link>
