@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 // import data from '../../utils/data';
 import axios from 'axios';
 import {
@@ -20,9 +20,9 @@ import Product from '../../models/Product';
 import { Store } from '../../utils/store';
 
 const Products = ({ product }) => {
-  // const router = useRouter();
+  const router = useRouter();
   // const { slug } = router.query;
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const classes = useStyles();
   if (!product) {
     return <h2>Product Not Found</h2>;
@@ -30,11 +30,14 @@ const Products = ({ product }) => {
 
   const addToCartHandler = async () => {
     const { data } = await axios.get(`/api/products/${product._id}`);
-    if (data.countInStock <= 0) {
+    const existItem = state.cart.cartItems.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    if (data.countInStock < quantity) {
       window.alert('Sorry, product is out of stock');
       return;
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    router.push('/cart');
   };
 
   return (
@@ -48,13 +51,15 @@ const Products = ({ product }) => {
       </div>
       <Grid container spacing={1}>
         <Grid item md={6} xs={12}>
-          <Image
-            src={product.image}
-            alt={product.name}
-            width={500}
-            height={500}
-            layout="responsive"
-          />
+          <div>
+            <Image
+              src={product.image}
+              width={300}
+              height={300}
+              alt={product.name}
+              layout="responsive"
+            />
+          </div>
         </Grid>
         <Grid item md={3} xs={12}>
           <List>
