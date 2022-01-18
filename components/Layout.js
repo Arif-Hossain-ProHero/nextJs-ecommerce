@@ -7,7 +7,7 @@ import {
   Typography,
   Container,
   Link,
-  createMuiTheme,
+  createTheme,
   ThemeProvider,
   CssBaseline,
   Switch,
@@ -20,9 +20,9 @@ import Cookies from 'js-cookie';
 export default function Layout({ title, description, children }) {
   const { state, dispatch } = useContext(Store);
   const { darkMode, cart } = state;
-  const theme = createMuiTheme({
+  const theme = createTheme({
     typography: {
-      h1: {
+      heading: {
         fontSize: '1.6rem',
         fontWeight: 400,
         margin: '1rem 0',
@@ -34,7 +34,7 @@ export default function Layout({ title, description, children }) {
       },
     },
     palette: {
-      type: darkMode ? 'dark' : 'light',
+      mode: darkMode ? 'dark' : 'light',
       primary: {
         main: '#f0c000',
       },

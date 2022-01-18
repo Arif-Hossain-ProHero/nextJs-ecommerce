@@ -23,7 +23,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 
-const cart = () => {
+const Cart = () => {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
@@ -138,9 +138,11 @@ const cart = () => {
                 </ListItem>
 
                 <ListItem>
-                  <Button fullWidth variant="contained" color="primary">
-                    Check Out
-                  </Button>
+                  <NextLink href={'/shipping'}>
+                    <Button fullWidth variant="contained" color="primary">
+                      Check Out
+                    </Button>
+                  </NextLink>
                 </ListItem>
               </List>
             </Card>
@@ -151,4 +153,4 @@ const cart = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(cart), { ssr: false });
+export default dynamic(() => Promise.resolve(Cart), { ssr: false });
