@@ -6,16 +6,32 @@ import {
   Button,
   Link,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import useStyles from '../utils/styles';
 import NextLink from 'next/link';
+import axios from 'axios';
 
 const Login = () => {
   const classes = useStyles();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  //submitHandler
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/users/login', {
+        email,
+        password,
+      });
+      alert('login successful');
+    } catch (err) {
+      alert(err.message);
+    }
+  };
   return (
     <Layout title="Login">
-      <form className={classes.form}>
+      <form onSubmit={submitHandler} className={classes.form}>
         <Typography component="h1" variant="heading">
           Login
         </Typography>
@@ -26,6 +42,7 @@ const Login = () => {
               fullWidth
               id="email"
               label="Email"
+              onChange={(e) => setEmail(e.target.value)}
               InputProps={{
                 type: 'email',
               }}
@@ -40,10 +57,12 @@ const Login = () => {
               }}
               id="password"
               label="Password"
+              onChange={(e) => setPassword(e.target.value)}
             ></TextField>
           </ListItem>
           <ListItem>
             <Button
+              type="submit"
               fullWidth
               variant="contained"
               color="primary"
