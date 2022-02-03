@@ -6,16 +6,29 @@ import {
   Button,
   Link,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Store } from '../utils/store';
 import Layout from '../components/Layout';
 import useStyles from '../utils/styles';
 import NextLink from 'next/link';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 const Login = () => {
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
+  const router = useRouter();
+  const { redirect } = router.query; //login?redirect=/shipping
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/');
+    }
+  }, []);
   //submitHandler
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -24,7 +37,9 @@ const Login = () => {
         email,
         password,
       });
-      alert('login successful');
+      dispatch({ type: 'USER_LOGIN', payload: data });
+      Cookies.set('userInfo', JSON.stringify(data));
+      router.push(redirect || '/');
     } catch (err) {
       alert(err.message);
     }

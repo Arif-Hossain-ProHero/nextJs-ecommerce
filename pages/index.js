@@ -21,7 +21,8 @@ import React, { useContext } from 'react';
 
 export default function Home(props) {
   const { products } = props;
-  const { state, dispatch } = useContext(Store);
+  const { state, dispatch, userInfo } = useContext(Store);
+  console.log(userInfo);
   const router = useRouter();
   //add cart handler
   const addToCartHandler = async (product) => {
