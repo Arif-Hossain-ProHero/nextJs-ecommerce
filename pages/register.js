@@ -15,14 +15,16 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 
-const Login = () => {
+const Register = () => {
   const { state, dispatch } = useContext(Store);
   const { userInfo } = state;
   const router = useRouter();
   const { redirect } = router.query; //login?redirect=/shipping
   const classes = useStyles();
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [ConfirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
     if (userInfo) {
@@ -32,8 +34,13 @@ const Login = () => {
   //submitHandler
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (password !== ConfirmPassword) {
+      alert('password dont match');
+      return;
+    }
     try {
-      const { data } = await axios.post('/api/users/login', {
+      const { data } = await axios.post('/api/users/register', {
+        name,
         email,
         password,
       });
@@ -45,12 +52,24 @@ const Login = () => {
     }
   };
   return (
-    <Layout title="Login">
+    <Layout title="Register">
       <form onSubmit={submitHandler} className={classes.form}>
         <Typography component="h1" variant="heading">
-          Login
+          Register
         </Typography>
         <List>
+          <ListItem>
+            <TextField
+              variant="outlined"
+              fullWidth
+              id="name"
+              label="Name"
+              onChange={(e) => setName(e.target.value)}
+              InputProps={{
+                type: 'text',
+              }}
+            ></TextField>
+          </ListItem>
           <ListItem>
             <TextField
               variant="outlined"
@@ -76,6 +95,18 @@ const Login = () => {
             ></TextField>
           </ListItem>
           <ListItem>
+            <TextField
+              variant="outlined"
+              fullWidth
+              InputProps={{
+                type: 'password',
+              }}
+              id="confirm-password"
+              label="Confirm Password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            ></TextField>
+          </ListItem>
+          <ListItem>
             <Button
               type="submit"
               fullWidth
@@ -83,13 +114,13 @@ const Login = () => {
               color="primary"
               sx={{ fontWeight: '600' }}
             >
-              Login
+              Register
             </Button>
           </ListItem>
           <ListItem>
-            Don't have an account. &nbsp;
-            <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
-              <Link>Register</Link>
+            Already have an account. &nbsp;
+            <NextLink href={`/login?redirect=${redirect || '/'}`} passHref>
+              <Link>Login</Link>
             </NextLink>
           </ListItem>
         </List>
@@ -98,4 +129,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
